@@ -76,7 +76,7 @@ fun SearchComponent(
 
 @Preview
 @Composable
-fun SearchComponentPreview() {
+private fun SearchComponentPreview() {
     SearchComponent(
         query = "",
         onSearch = {},

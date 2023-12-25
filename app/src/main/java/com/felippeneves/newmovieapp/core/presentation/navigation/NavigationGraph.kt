@@ -33,7 +33,7 @@ fun NavigationGraph(navController: NavHostController) {
             MoviePopularScreen(
                 uiState = uiState,
                 navigateToMovieDetails = { movieId ->
-                    navController.navigate(route = BottomNavItem.MovieDetails.passMovieId(movieId = movieId))
+                    navController.navigate(route = DetailsScreenNav.DetailsScreen.passMovieId(movieId = movieId))
                 }
             )
         }
@@ -50,7 +50,7 @@ fun NavigationGraph(navController: NavHostController) {
                 onEvent = onEvent,
                 onFetch = onFetch,
                 navigateToMovieDetails = { movieId ->
-                    navController.navigate(route = BottomNavItem.MovieDetails.passMovieId(movieId = movieId))
+                    navController.navigate(route = DetailsScreenNav.DetailsScreen.passMovieId(movieId = movieId))
                 }
             )
         }
@@ -62,33 +62,27 @@ fun NavigationGraph(navController: NavHostController) {
             MovieFavoriteScreen(
                 uiState = uiState,
                 navigateToDetailsMovie = { movieId ->
-                    navController.navigate(route = BottomNavItem.MovieDetails.passMovieId(movieId = movieId))
+                    navController.navigate(route = DetailsScreenNav.DetailsScreen.passMovieId(movieId = movieId))
                 }
             )
         }
 
         composable(
-            route = BottomNavItem.MovieDetails.route,
+            route = DetailsScreenNav.DetailsScreen.route,
             arguments = listOf(
                 navArgument(Constants.MOVIE_DETAIL_ARGUMENT_KEY) {
                     type = NavType.IntType
                     defaultValue = 0
                 }
             )
-        ) { navBackStackEntry ->
+        ) {
             val viewModel: MovieDetailsViewModel = hiltViewModel()
             val uiState = viewModel.uiState
-            val getMovieDetails = viewModel::getMovieDetails
             val onHandleFavorite = viewModel::onHandleFavorite
-            val checkedFavorite = viewModel::checkedFavorite
-            val id = navBackStackEntry.arguments?.getInt(Constants.MOVIE_DETAIL_ARGUMENT_KEY)
 
             MovieDetailsScreen(
-                id = id,
                 uiState = uiState,
-                getMovieDetails = getMovieDetails,
-                onHandleFavorite = onHandleFavorite,
-                checkedFavorite = checkedFavorite
+                onHandleFavorite = onHandleFavorite
             )
         }
     }

@@ -15,14 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.felippeneves.newmovieapp.R
+import com.felippeneves.newmovieapp.core.presentation.components.common.AsyncImageUrl
 
 @Composable
 fun MovieItem(
@@ -56,15 +52,8 @@ fun MovieItem(
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Box {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(imageUrl)
-                        .crossfade(true)
-                        .error(R.drawable.ic_error_image)
-                        .placeholder(R.drawable.ic_placeholder)
-                        .build(),
-                    contentDescription = "",
-                    contentScale = ContentScale.FillHeight,
+                AsyncImageUrl(
+                    imageUrl = imageUrl,
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
@@ -78,7 +67,7 @@ fun MovieItem(
 
 @Preview
 @Composable
-fun MovieItemPreview() {
+private fun MovieItemPreview() {
     MovieItem(
         voteAverage = 7.2,
         imageUrl = "",

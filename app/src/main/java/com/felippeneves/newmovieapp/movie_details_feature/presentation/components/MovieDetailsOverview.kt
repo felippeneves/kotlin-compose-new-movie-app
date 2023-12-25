@@ -71,7 +71,7 @@ fun MovieDetailsOverview(
 
 @Preview
 @Composable
-fun MovieDetailsOverviewPreview() {
+private fun MovieDetailsOverviewPreview() {
     MovieDetailsOverview(
         overview = "Movie About science!",
         modifier = Modifier

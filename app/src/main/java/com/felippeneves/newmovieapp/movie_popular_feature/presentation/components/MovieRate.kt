@@ -43,6 +43,6 @@ fun MovieRate(
 
 @Preview
 @Composable
-fun MovieRatePreview() {
+private fun MovieRatePreview() {
     MovieRate(rate = 7.1)
 }

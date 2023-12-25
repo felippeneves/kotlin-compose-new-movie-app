@@ -2,20 +2,15 @@ package com.felippeneves.newmovieapp.movie_popular_feature.presentation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.felippeneves.newmovieapp.R
 import com.felippeneves.newmovieapp.core.domain.model.Movie
+import com.felippeneves.newmovieapp.core.presentation.components.common.MovieAppBar
 import com.felippeneves.newmovieapp.core.util.UtilFunctions
 import com.felippeneves.newmovieapp.movie_popular_feature.presentation.components.MovieContent
 import com.felippeneves.newmovieapp.movie_popular_feature.presentation.state.MoviePopularState
-import com.felippeneves.newmovieapp.ui.theme.black
-import com.felippeneves.newmovieapp.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,17 +22,7 @@ fun MoviePopularScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.popular_movies),
-                        color = white
-                    )
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = black
-                )
-            )
+            MovieAppBar(title = R.string.popular_movies)
         },
         content = { paddingValues ->
             MovieContent(

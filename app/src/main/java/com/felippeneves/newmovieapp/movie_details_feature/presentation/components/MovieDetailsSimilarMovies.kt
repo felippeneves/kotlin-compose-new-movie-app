@@ -88,7 +88,7 @@ fun MovieDetailsSimilarMovies(
 
 @Preview
 @Composable
-fun MovieDetailsSimilarMoviesPreview() {
+private fun MovieDetailsSimilarMoviesPreview() {
     MovieDetailsSimilarMovies(
         pagingMoviesSimilar = flowOf(
             PagingData.from(

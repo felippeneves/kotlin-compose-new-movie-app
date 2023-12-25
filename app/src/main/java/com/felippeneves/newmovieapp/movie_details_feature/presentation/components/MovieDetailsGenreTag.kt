@@ -39,6 +39,6 @@ fun MovieDetailsGenreTag(
 
 @Preview
 @Composable
-fun MovieDetailsGenreTagPreview() {
+private fun MovieDetailsGenreTagPreview() {
     MovieDetailsGenreTag(genre = "Adventure")
 }

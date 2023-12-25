@@ -33,7 +33,7 @@ fun MovieDetailsFavorite(
 
 @Preview
 @Composable
-fun MovieDetailsFavoritePreview() {
+private fun MovieDetailsFavoritePreview() {
     MovieDetailsFavorite(
         iconColor = Color.Red,
         onClick = {}

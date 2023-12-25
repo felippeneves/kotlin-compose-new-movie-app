@@ -12,14 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.felippeneves.newmovieapp.core.presentation.navigation.BottomNavigationBar
+import com.felippeneves.newmovieapp.core.presentation.navigation.DetailsScreenNav
 import com.felippeneves.newmovieapp.core.presentation.navigation.NavigationGraph
+import com.felippeneves.newmovieapp.core.presentation.navigation.currentRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            if (currentRoute(navController = navController) != DetailsScreenNav.DetailsScreen.route) {
+                BottomNavigationBar(navController = navController)
+            }
         }
     ) { paddingValues ->
         Box(

@@ -9,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.felippeneves.newmovieapp.ui.theme.black
-import com.felippeneves.newmovieapp.ui.theme.white
 import com.felippeneves.newmovieapp.ui.theme.yellow
 
 @Composable
@@ -55,9 +55,16 @@ fun BottomNavigationBar(
     }
 }
 
+@Composable
+fun currentRoute(navController: NavHostController): String? {
+    //Contem as informações a entrada atual da pilha de navegação
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route
+}
+
 @Preview
 @Composable
-fun BottomNavigationBarPreview() {
+private fun BottomNavigationBarPreview() {
     BottomNavigationBar(navController = rememberNavController())
 }
 

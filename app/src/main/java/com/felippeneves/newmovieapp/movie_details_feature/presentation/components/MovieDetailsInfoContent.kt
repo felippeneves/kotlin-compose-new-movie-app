@@ -73,9 +73,9 @@ fun MovieInfo(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun MovieDetailsInfoContentPreview() {
+private fun MovieDetailsInfoContentPreview() {
     MovieDetailsInfoContent(
         movieDetails = MovieDetails(
             id = 1,

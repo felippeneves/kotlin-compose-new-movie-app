@@ -13,16 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.felippeneves.newmovieapp.R
 import com.felippeneves.newmovieapp.core.domain.model.Movie
+import com.felippeneves.newmovieapp.core.presentation.components.common.AsyncImageUrl
 import com.felippeneves.newmovieapp.ui.theme.black
 import com.felippeneves.newmovieapp.ui.theme.white
 
@@ -50,16 +47,12 @@ fun MovieFavoriteItem(
                     .fillMaxWidth()
                     .height(200.dp)
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(movie.imageUrl)
-                        .crossfade(true)
-                        .error(R.drawable.ic_error_image)
-                        .placeholder(R.drawable.ic_placeholder)
-                        .build(),
-                    contentDescription = null,
+                AsyncImageUrl(
+                    imageUrl = movie.imageUrl,
                     contentScale = ContentScale.FillWidth,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
                 )
             }
             Text(
@@ -77,7 +70,7 @@ fun MovieFavoriteItem(
 
 @Preview
 @Composable
-fun MovieFavoriteItemPreview() {
+private fun MovieFavoriteItemPreview() {
     MovieFavoriteItem(
         movie = Movie(
             id = 1,

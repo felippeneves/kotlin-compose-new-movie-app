@@ -110,7 +110,7 @@ private val starPath = { size: Float ->
 
 @Preview
 @Composable
-fun MovieDetailsRatingBarPreview() {
+private fun MovieDetailsRatingBarPreview() {
     Column(Modifier.background(Color.Black)) {
         MovieDetailsRatingBar(
             3.5f,

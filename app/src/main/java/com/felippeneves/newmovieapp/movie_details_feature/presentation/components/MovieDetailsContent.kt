@@ -111,6 +111,7 @@ fun MovieDetailsContent(
             MovieDetailsInfoContent(
                 movieDetails = movieDetails,
                 modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 8.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -182,7 +183,7 @@ private fun calculateAverageVotes(voteAverage: Double?) =
 
 @Preview
 @Composable
-fun MovieDetailsContentPreview() {
+private fun MovieDetailsContentPreview() {
     MovieDetailsContent(
         movieDetails = MovieDetails(
             id = 1,

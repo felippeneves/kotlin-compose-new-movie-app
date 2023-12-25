@@ -2,18 +2,13 @@ package com.felippeneves.newmovieapp.movie_favorite_feature.presentation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.felippeneves.newmovieapp.R
 import com.felippeneves.newmovieapp.core.domain.model.Movie
+import com.felippeneves.newmovieapp.core.presentation.components.common.MovieAppBar
 import com.felippeneves.newmovieapp.movie_favorite_feature.presentation.components.MovieFavoriteContent
 import com.felippeneves.newmovieapp.movie_favorite_feature.presentation.state.MovieFavoriteState
-import com.felippeneves.newmovieapp.ui.theme.black
-import com.felippeneves.newmovieapp.ui.theme.white
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,17 +20,7 @@ fun MovieFavoriteScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.favorite_movies),
-                        color = white
-                    )
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = black
-                )
-            )
+            MovieAppBar(title = R.string.favorite_movies)
         },
         content = { paddingValues ->
             MovieFavoriteContent(
@@ -51,7 +36,7 @@ fun MovieFavoriteScreen(
 
 @Preview
 @Composable
-fun MovieFavoriteScreenPreview() {
+private fun MovieFavoriteScreenPreview() {
     MovieFavoriteScreen(
         uiState = MovieFavoriteState(
             movies = listOf(
