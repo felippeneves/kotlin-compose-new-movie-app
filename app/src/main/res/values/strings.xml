@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">New Movie App</string>
+
+    <!--    Movie Details -->
+    <string name="release_date">Release Date</string>
+    <string name="average_vote">Average Votes</string>
+    <string name="duration">Duration</string>
+    <string name="duration_minutes">%1$s min</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="description">Description</string>
+
+    <!--    TopBar text-->
+    <string name="popular_movies">Popular Movies</string>
+    <string name="search_movies">Search Movies</string>
+    <string name="favorite_movies">Favorite Movies</string>
+    <string name="movie_details">Movie Details</string>
+
+
+    <string name="reload">Reload</string>
+    <string name="check_your_internet_connection">Check your internet connection</string>
+
+</resources>
