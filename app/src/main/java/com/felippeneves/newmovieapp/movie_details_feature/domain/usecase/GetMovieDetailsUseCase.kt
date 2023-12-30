@@ -38,7 +38,7 @@ class GetMovieDetailsUseCaseImpl @Inject constructor(
                 emit(DataResult.Success(moviesSimilar to movieDetails))
             } catch (e: HttpException) {
                 emit(DataResult.Failure(e))
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 emit(DataResult.Failure(e))
             }
         }.flowOn(Dispatchers.IO) //Garante que as operações sejam executadas em um Thread separada

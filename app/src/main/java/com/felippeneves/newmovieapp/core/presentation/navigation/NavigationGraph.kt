@@ -2,6 +2,7 @@ package com.felippeneves.newmovieapp.core.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -33,7 +34,11 @@ fun NavigationGraph(navController: NavHostController) {
             MoviePopularScreen(
                 uiState = uiState,
                 navigateToMovieDetails = { movieId ->
-                    navController.navigate(route = DetailsScreenNav.DetailsScreen.passMovieId(movieId = movieId))
+                    navController.navigate(
+                        route = DetailsScreenNav.DetailsScreen.passMovieId(
+                            movieId = movieId
+                        )
+                    )
                 }
             )
         }
@@ -50,19 +55,31 @@ fun NavigationGraph(navController: NavHostController) {
                 onEvent = onEvent,
                 onFetch = onFetch,
                 navigateToMovieDetails = { movieId ->
-                    navController.navigate(route = DetailsScreenNav.DetailsScreen.passMovieId(movieId = movieId))
+                    navController.navigate(
+                        route = DetailsScreenNav.DetailsScreen.passMovieId(
+                            movieId = movieId
+                        )
+                    )
                 }
             )
         }
 
         composable(route = BottomNavItem.FavoriteMovie.route) {
             val viewModel: MovieFavoriteViewModel = hiltViewModel()
-            val uiState = viewModel.uiState
+            //Diferente do collectAsState, esse collect conhece o ciclo de vida da UI, portanto,
+            //quando o aplicativo estiver em segundo plano ele não manterá a coleta de fluxo ativo,
+            //dessa maneira não desperdiça recurso
+            val uiState =
+                viewModel.uiState.movies.collectAsStateWithLifecycle(initialValue = emptyList())
 
             MovieFavoriteScreen(
-                uiState = uiState,
+                movies = uiState.value,
                 navigateToDetailsMovie = { movieId ->
-                    navController.navigate(route = DetailsScreenNav.DetailsScreen.passMovieId(movieId = movieId))
+                    navController.navigate(
+                        route = DetailsScreenNav.DetailsScreen.passMovieId(
+                            movieId = movieId
+                        )
+                    )
                 }
             )
         }

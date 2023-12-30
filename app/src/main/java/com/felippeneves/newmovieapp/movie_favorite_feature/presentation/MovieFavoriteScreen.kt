@@ -13,11 +13,9 @@ import com.felippeneves.newmovieapp.movie_favorite_feature.presentation.state.Mo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieFavoriteScreen(
-    uiState: MovieFavoriteState,
+    movies: List<Movie>,
     navigateToDetailsMovie: (Int) -> Unit
 ) {
-    val movies = uiState.movies
-
     Scaffold(
         topBar = {
             MovieAppBar(title = R.string.favorite_movies)
@@ -38,23 +36,21 @@ fun MovieFavoriteScreen(
 @Composable
 private fun MovieFavoriteScreenPreview() {
     MovieFavoriteScreen(
-        uiState = MovieFavoriteState(
-            movies = listOf(
-                Movie(
-                    id = 1,
-                    title = "Spider-Man: Far From Home",
-                    imageUrl = ""
-                ),
-                Movie(
-                    id = 2,
-                    title = "Captain America: The Winter Soldier",
-                    imageUrl = ""
-                ),
-                Movie(
-                    id = 3,
-                    title = "Avengers: Infinity War",
-                    imageUrl = ""
-                )
+        movies = listOf(
+            Movie(
+                id = 1,
+                title = "Spider-Man: Far From Home",
+                imageUrl = ""
+            ),
+            Movie(
+                id = 2,
+                title = "Captain America: The Winter Soldier",
+                imageUrl = ""
+            ),
+            Movie(
+                id = 3,
+                title = "Avengers: Infinity War",
+                imageUrl = ""
             )
         ),
         navigateToDetailsMovie = { }

@@ -23,7 +23,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.felippeneves.newmovieapp.HiltTestRunner"
 
         buildConfigField("String", "API_KEY", apiKeyProperties["API_KEY"].toString())
         buildConfigField("String", "BASE_URL", apiKeyProperties["BASE_URL"].toString())
@@ -72,7 +73,6 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.2")
@@ -81,13 +81,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.50")
@@ -139,6 +133,45 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
+
+    //Truth
+    implementation("com.google.truth:truth:1.1.3")
+
+    //Javax Inject
+    implementation("javax.inject:javax.inject:1")
+
+    //Unit tests
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    // Dependência do Mockito para ser possível mockar classes e métodos constantes
+    testImplementation("org.mockito:mockito-inline:2.28.2")
+    //Room
+    testImplementation("androidx.room:room-testing:2.6.1")
+    testImplementation("androidx.paging:paging-common:3.2.1")
+
+    //Instrumentation tests
+    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    androidTestImplementation("com.google.truth:truth:1.1.3")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //Dagger Hilt
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.45")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.50")
+
+    // Dependência principal do Mockito
+    testImplementation("org.mockito:mockito-core:3.10.0")
+    // Dependência do Mockito para testes no Android
+    androidTestImplementation("org.mockito:mockito-android:3.10.0")
+
 }
 
 // Allow references to generated code

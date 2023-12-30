@@ -11,9 +11,27 @@ interface MovieDao : BaseDao<MovieEntity> {
         """   
             SELECT *   
             FROM TB_MOVIES
+            ORDER BY MOVIE_ID
         """
     )
     fun getMovies(): Flow<List<MovieEntity>>
+
+    @Query(
+        """   
+            SELECT *   
+            FROM TB_MOVIES
+            WHERE MOVIE_ID = :movieId
+        """
+    )
+    fun getMovie(movieId: Int): MovieEntity?
+
+    @Query(
+        """   
+            SELECT COUNT(1)   
+            FROM TB_MOVIES
+        """
+    )
+    suspend fun countAll(): Int
 
     @Query(
         """   

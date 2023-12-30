@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.felippeneves.newmovieapp.movie_favorite_feature.domain.usecase.GetMoviesFavoriteUseCase
 import com.felippeneves.newmovieapp.movie_favorite_feature.presentation.state.MovieFavoriteState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,9 +24,8 @@ class MovieFavoriteViewModel @Inject constructor(
 
     private fun fetch() {
         viewModelScope.launch {
-            getMoviesFavoriteUseCase.invoke().collectLatest { movies ->
-                uiState = uiState.copy(movies = movies)
-            }
+            val movies = getMoviesFavoriteUseCase.invoke()
+            uiState = uiState.copy(movies = movies)
         }
     }
 }
