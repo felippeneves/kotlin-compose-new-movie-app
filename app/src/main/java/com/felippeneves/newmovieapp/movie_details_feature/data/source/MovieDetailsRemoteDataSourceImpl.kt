@@ -1,11 +1,12 @@
 package com.felippeneves.newmovieapp.movie_details_feature.data.source
 
 import com.felippeneves.newmovieapp.core.data.remote.api.MovieService
-import com.felippeneves.newmovieapp.core.data.remote.response.MovieResponse
 import com.felippeneves.newmovieapp.core.domain.model.MovieDetails
+import com.felippeneves.newmovieapp.core.domain.model.MoviePaging
 import com.felippeneves.newmovieapp.core.paging.MovieSimilarPagingSource
 import com.felippeneves.newmovieapp.core.util.toBackdropUrl
 import com.felippeneves.newmovieapp.movie_details_feature.domain.source.MovieDetailsRemoteDataSource
+import com.felippeneves.newmovieapp.movie_popular_feature.data.mapper.toMoviePaging
 import javax.inject.Inject
 
 class MovieDetailsRemoteDataSourceImpl @Inject constructor(
@@ -27,8 +28,8 @@ class MovieDetailsRemoteDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getMoviesSimilar(page: Int, movieId: Int): MovieResponse =
-        service.getMoviesSimilar(page = page, movieId = movieId)
+    override suspend fun getMoviesSimilar(page: Int, movieId: Int): MoviePaging =
+        service.getMoviesSimilar(page = page, movieId = movieId).toMoviePaging()
 
     override fun getSimilarMoviesPagingSource(movieId: Int): MovieSimilarPagingSource =
         MovieSimilarPagingSource(remoteDataSource = this, movieId = movieId)

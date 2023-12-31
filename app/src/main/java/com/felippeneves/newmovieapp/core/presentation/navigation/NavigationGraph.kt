@@ -16,9 +16,9 @@ import com.felippeneves.newmovieapp.movie_favorite_feature.presentation.MovieFav
 import com.felippeneves.newmovieapp.movie_popular_feature.presentation.MoviePopularScreen
 import com.felippeneves.newmovieapp.movie_popular_feature.presentation.MoviePopularViewModel
 import com.felippeneves.newmovieapp.movie_popular_feature.presentation.state.MoviePopularState
-import com.felippeneves.newmovieapp.search_movie_feature.presentation.MovieSearchEvent
-import com.felippeneves.newmovieapp.search_movie_feature.presentation.MovieSearchScreen
-import com.felippeneves.newmovieapp.search_movie_feature.presentation.MovieSearchViewModel
+import com.felippeneves.newmovieapp.movie_search_feature.presentation.MovieSearchEvent
+import com.felippeneves.newmovieapp.movie_search_feature.presentation.MovieSearchScreen
+import com.felippeneves.newmovieapp.movie_search_feature.presentation.MovieSearchViewModel
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {

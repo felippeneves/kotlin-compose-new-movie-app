@@ -149,7 +149,7 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:2.28.2")
     //Room
     testImplementation("androidx.room:room-testing:2.6.1")
-    testImplementation("androidx.paging:paging-common:3.2.1")
+    testImplementation("androidx.paging:paging-common-ktx:3.2.1")
 
     //Instrumentation tests
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")

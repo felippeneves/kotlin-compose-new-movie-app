@@ -11,6 +11,7 @@ import com.felippeneves.newmovieapp.core.domain.model.Movie
 import com.felippeneves.newmovieapp.core.util.Constants
 import com.felippeneves.newmovieapp.core.util.DataResult
 import com.felippeneves.newmovieapp.core.util.UtilFunctions
+import com.felippeneves.newmovieapp.core.util.getPagingConfig
 import com.felippeneves.newmovieapp.movie_details_feature.domain.usecase.GetMovieDetailsUseCase
 import com.felippeneves.newmovieapp.movie_details_feature.presentation.state.MovieDetailsState
 import com.felippeneves.newmovieapp.movie_favorite_feature.domain.usecase.AddMovieFavoriteUseCase
@@ -38,8 +39,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     init {
         movieId?.let { safeMovieId ->
-            //TODO: Descomentar
-//            checkedFavorite(MovieDetailsEvent.CheckedFavorite(movieId = safeMovieId))
+            checkedFavorite(MovieDetailsEvent.CheckedFavorite(movieId = safeMovieId))
             getMovieDetails(MovieDetailsEvent.GetMovieDetails(movieId = safeMovieId))
         }
     }
@@ -62,36 +62,37 @@ class MovieDetailsViewModel @Inject constructor(
         when (event) {
             is MovieDetailsEvent.GetMovieDetails -> {
                 viewModelScope.launch {
-                    getMovieDetailsUseCase.invoke(
+                    val dataResult = getMovieDetailsUseCase.invoke(
                         params = GetMovieDetailsUseCase.Params(
-                            movieId = event.movieId
+                            movieId = event.movieId,
+                            pagingConfig = getPagingConfig()
                         )
-                    ).collect { dataResult ->
-                        when (dataResult) {
-                            is DataResult.Success -> {
-                                uiState = uiState.copy(
-                                    isLoading = false,
-                                    movieDetails = dataResult.data?.second,
-                                    results = dataResult.data?.first ?: emptyFlow()
-                                )
-                            }
+                    )
 
-                            is DataResult.Failure -> {
-                                uiState = uiState.copy(
-                                    isLoading = false,
-                                    error = dataResult.e?.message.toString()
-                                )
-                                UtilFunctions.logError(
-                                    tag = "DETAIL ERROR",
-                                    message = dataResult.e?.message.toString()
-                                )
-                            }
+                    when (dataResult) {
+                        is DataResult.Success -> {
+                            uiState = uiState.copy(
+                                isLoading = false,
+                                movieDetails = dataResult.data?.second,
+                                results = dataResult.data?.first ?: emptyFlow()
+                            )
+                        }
 
-                            is DataResult.Loading -> {
-                                uiState = uiState.copy(
-                                    isLoading = true
-                                )
-                            }
+                        is DataResult.Failure -> {
+                            uiState = uiState.copy(
+                                isLoading = false,
+                                error = dataResult.e?.message.toString()
+                            )
+                            UtilFunctions.logError(
+                                tag = "DETAIL ERROR",
+                                message = dataResult.e?.message.toString()
+                            )
+                        }
+
+                        is DataResult.Loading -> {
+                            uiState = uiState.copy(
+                                isLoading = true
+                            )
                         }
                     }
                 }

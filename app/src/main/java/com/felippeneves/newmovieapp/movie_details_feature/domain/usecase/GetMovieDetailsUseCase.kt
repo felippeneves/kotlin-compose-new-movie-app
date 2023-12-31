@@ -1,5 +1,6 @@
 package com.felippeneves.newmovieapp.movie_details_feature.domain.usecase
 
+import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.felippeneves.newmovieapp.core.domain.model.Movie
@@ -8,38 +9,32 @@ import com.felippeneves.newmovieapp.core.util.DataResult
 import com.felippeneves.newmovieapp.movie_details_feature.domain.repository.MovieDetailsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import retrofit2.HttpException
-import java.io.IOException
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface GetMovieDetailsUseCase {
-    operator fun invoke(params: Params): Flow<DataResult<Pair<Flow<PagingData<Movie>>, MovieDetails>>>
-    data class Params(val movieId: Int)
+    suspend operator fun invoke(params: Params): DataResult<Pair<Flow<PagingData<Movie>>, MovieDetails>>
+    data class Params(val movieId: Int, val pagingConfig: PagingConfig)
 }
 
 class GetMovieDetailsUseCaseImpl @Inject constructor(
     private val repository: MovieDetailsRepository
 ) : GetMovieDetailsUseCase {
-    override fun invoke(params: GetMovieDetailsUseCase.Params): Flow<DataResult<Pair<Flow<PagingData<Movie>>, MovieDetails>>> =
-        flow {
+    override suspend fun invoke(params: GetMovieDetailsUseCase.Params): DataResult<Pair<Flow<PagingData<Movie>>, MovieDetails>> =
+        withContext(Dispatchers.IO) {
+            DataResult.Loading
             try {
-                emit(DataResult.Loading)
+                val pagingSource = repository.getMoviesSimilar(movieId = params.movieId)
                 val movieDetails = repository.getMovieDetails(movieId = params.movieId)
-                val moviesSimilar = repository.getMoviesSimilar(
-                    movieId = params.movieId,
-                    pagingConfig = PagingConfig(
-                        pageSize = 20,
-                        initialLoadSize = 20
-                    )
-                )
-                //"to" é utilizado para passar 2 parâmetro para o Pair
-                emit(DataResult.Success(moviesSimilar to movieDetails))
-            } catch (e: HttpException) {
-                emit(DataResult.Failure(e))
+                val pager = Pager(
+                    config = params.pagingConfig,
+                    pagingSourceFactory = {
+                        pagingSource
+                    }
+                ).flow
+                DataResult.Success(data = pager to movieDetails)
             } catch (e: Exception) {
-                emit(DataResult.Failure(e))
+                DataResult.Failure(e = e)
             }
-        }.flowOn(Dispatchers.IO) //Garante que as operações sejam executadas em um Thread separada
+        }
 }

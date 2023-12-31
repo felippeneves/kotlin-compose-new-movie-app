@@ -14,7 +14,7 @@ class MovieFactory {
 
         Poster.Avengers -> {
             Movie(
-                id = 1,
+                id = 2,
                 title = "Avengers",
                 voteAverage = 9.8,
                 imageUrl = "url"
@@ -23,7 +23,7 @@ class MovieFactory {
 
         Poster.SpiderMan -> {
             Movie(
-                id = 1,
+                id = 3,
                 title = "Spider Man",
                 voteAverage = 9.7,
                 imageUrl = "url"

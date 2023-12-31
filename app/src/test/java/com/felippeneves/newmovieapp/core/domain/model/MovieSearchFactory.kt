@@ -13,7 +13,7 @@ class MovieSearchFactory {
 
         Poster.Avengers -> {
             MovieSearch(
-                id = 1,
+                id = 2,
                 voteAverage = 9.8,
                 imageUrl = "url"
             )
@@ -21,7 +21,7 @@ class MovieSearchFactory {
 
         Poster.SpiderMan -> {
             MovieSearch(
-                id = 1,
+                id = 3,
                 voteAverage = 9.7,
                 imageUrl = "url"
             )

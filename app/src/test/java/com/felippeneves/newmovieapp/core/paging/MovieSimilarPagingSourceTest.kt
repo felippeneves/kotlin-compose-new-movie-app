@@ -1,0 +1,92 @@
+package com.felippeneves.newmovieapp.core.paging
+
+import androidx.paging.PagingSource
+import com.felippeneves.newmovieapp.TestDispatcherRule
+import com.felippeneves.newmovieapp.core.domain.model.Movie
+import com.felippeneves.newmovieapp.core.domain.model.MovieFactory
+import com.felippeneves.newmovieapp.core.domain.model.MoviePagingFactory
+import com.felippeneves.newmovieapp.movie_details_feature.domain.source.MovieDetailsRemoteDataSource
+import com.google.common.truth.Truth
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
+
+@RunWith(MockitoJUnitRunner::class)
+class MovieSimilarPagingSourceTest {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val dispatcherRule = TestDispatcherRule()
+
+    @Mock
+    lateinit var remoteDataSource: MovieDetailsRemoteDataSource
+
+    private val movieFactory = MovieFactory()
+
+    private val moviePagingFactory = MoviePagingFactory().create()
+
+    private val moviesSimilarPagingSource by lazy {
+        MovieSimilarPagingSource(
+            movieId = 1,
+            remoteDataSource = remoteDataSource
+        )
+    }
+
+    @Test
+    fun `must return a success load result when load is called`() = runTest {
+        //Given
+        whenever(remoteDataSource.getMoviesSimilar(any(), any()))
+            .thenReturn(moviePagingFactory)
+
+        //When
+        val result = moviesSimilarPagingSource.load(
+            //É chamado sempre que é feito uma requisição da primeira página
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = moviePagingFactory.totalResults,
+                placeholdersEnabled = false
+            )
+        )
+
+        val resultExpected = listOf(
+            movieFactory.create(MovieFactory.Poster.CaptainAmerica),
+            movieFactory.create(MovieFactory.Poster.Avengers),
+        )
+
+        //Then
+        Truth.assertThat(
+            PagingSource.LoadResult.Page(
+                data = resultExpected,
+                //O teste é realizado baseado em apenas uma página
+                prevKey = null,
+                nextKey = null
+            )
+        ).isEqualTo(result)
+    }
+
+    @Test
+    fun `must return an error load result when load is called`() = runTest {
+        //Given
+        val exception = RuntimeException()
+        whenever(remoteDataSource.getMoviesSimilar(any(), any()))
+            .thenThrow(exception)
+
+        //When
+        val result = moviesSimilarPagingSource.load(
+            //É chamado sempre que é feito uma requisição da primeira página
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = moviePagingFactory.totalResults,
+                placeholdersEnabled = false
+            )
+        )
+
+        //Then
+        Truth.assertThat(PagingSource.LoadResult.Error<Int, Movie>(exception)).isEqualTo(result)
+    }
+}

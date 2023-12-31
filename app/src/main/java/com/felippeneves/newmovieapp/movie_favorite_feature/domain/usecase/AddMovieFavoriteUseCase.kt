@@ -21,7 +21,11 @@ class AddMovieFavoriteUseCaseImpl @Inject constructor(
 ) : AddMovieFavoriteUseCase {
     override suspend fun invoke(params: AddMovieFavoriteUseCase.Params): Flow<DataResult<Unit>> =
         flow {
-            val result = repository.insert(movie = params.movie)
-            emit(DataResult.Success(result))
+            try {
+                val result = repository.insert(movie = params.movie)
+                emit(DataResult.Success(result))
+            } catch (e: Exception) {
+                emit(DataResult.Failure(e = e))
+            }
         }.flowOn(Dispatchers.IO)
 }
